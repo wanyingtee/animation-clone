@@ -6,10 +6,8 @@ import { SectionThree } from "./SectionThree";
 export const AboutPage = () => {
   return (
     <main>
-      {/* Fade in and out */}
-      <ScrollSection animation="fade">
-        <SectionOne />
-      </ScrollSection>
+      {/* Has its own scroll animation, so no ScrollSection wrapper */}
+      <SectionOne />
 
       {/* Move vertically */}
       <ScrollSection animation="slide">
