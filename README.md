@@ -1,73 +1,41 @@
-# React + TypeScript + Vite
+# ORDR animation clone
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Responsive React + TypeScript recreation of the ORDR home and About pages, using Framer Motion.
 
-Currently, two official plugins are available:
+## Run
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+```sh
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+- `/` — home page
+- `/about` — About page
 
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
+`npm run build` checks TypeScript and builds the production files in `dist/`. Production hosting needs an SPA fallback to `index.html` for direct `/about` navigation.
 
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs["recommended-typescript"],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+## Animation implementation
+
+- `src/page/home/HomeMotion.tsx`: scroll-driven masked text reveals and independently layered scroll, pointer, and idle patch movement.
+- `src/page/home/HomePage.tsx`: letter-by-letter hero entrance, sticky crest moving into the benefits grid, animated dividers, newsletter hover lift, overlapping archive cards, and program-card parallax.
+- `src/page/home/HomePage.css`: desktop, tablet, mobile, and reduced-motion layouts.
+- `src/page/about/SectionThree.tsx`: image reveal followed by five staggered masked text lines.
+
+Home and About use local links. Archive articles, Contact, social, and legal links lead to the original ORDR website. The program card links to the original longevity programs. Signup areas are intentionally static blank lines and text, as requested; they do not collect, store, or submit email addresses.
+
+## Asset naming
+
+Images in `src/assets` are named by purpose:
+
+- `home-*`: home editorial photo, benefits crest, newsletter preview.
+- `about-*`: the About story portraits and mission photograph.
+- `archive-*`: article cover images.
+- `patch-*`: embroidered decorations, including the winged shoe, runner, varsity O, Atlas, health club, anniversary badge, and crest variants.
+- `divider-star.svg`: decorative divider ornament.
+- `paper-background-original.jpg`: retained original background asset.
+
+Shared fonts, the paper overlay, and the ORDR wordmark live in `public/assets` with descriptive names. Existing alternate patches are retained even where not currently displayed. Assets originate from the supplied ORDR reference and the existing workspace.
+
+## Accessibility
+
+Reduced-motion preferences disable decorative movement and reveal all text. Mobile navigation supports Escape and focus wrapping. A skip link provides keyboard access to the main content. On smaller screens the archive cards use normal document flow so article content remains reachable.

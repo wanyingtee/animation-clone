@@ -4,37 +4,18 @@ import {
   useScroll,
   useSpring,
   useTransform,
+  useReducedMotion,
   type MotionValue,
 } from "framer-motion";
-import img1 from "../../assets/SectionOne_1.webp";
-import img2 from "../../assets/SectionOne_2.webp";
-import img3 from "../../assets/SectionOne_3.webp";
-
-// Placeholder copy, swap in your own
+import img1 from "../../assets/about-articles-portrait.webp";
+import img2 from "../../assets/about-podcast-player.webp";
+import img3 from "../../assets/about-sunglasses-portrait.webp";
 const lines = [
-  "You start a new habit on Monday.",
-  "By Wednesday the plan is buried under ten browser tabs.",
-  "By Friday you are back to guessing what actually works.",
+  "You’ve read the articles.",
+  "Heard the long podcasts with words you need to Google.",
+  "Doom scrolled supplement threads about sleep at 1 am.",
 ];
-
-// Timeline (in "seconds", mapped onto scroll progress)
-const WORD_DURATION = 1;
-const WORD_STAGGER = 0.2;
-const IMG_DURATION = 0.6;
-const IMG2_START = 0.84;
-const IMG3_START = 2.86;
-
-const words = lines.map((line) => line.split(" "));
-const wordCount = words.flat().length;
-const TIMELINE_LENGTH = Math.max(
-  WORD_DURATION + WORD_STAGGER * (wordCount - 1),
-  IMG3_START + IMG_DURATION,
-);
-
-// Smooths scroll progress so the animation trails the scrollbar slightly (like GSAP scrub)
-const SCRUB = { stiffness: 120, damping: 30, restDelta: 0.001 };
-
-const Word = ({
+function Word({
   progress,
   start,
   children,
@@ -42,20 +23,16 @@ const Word = ({
   progress: MotionValue<number>;
   start: number;
   children: string;
-}) => {
-  const opacity = useTransform(
-    progress,
-    [start / TIMELINE_LENGTH, (start + WORD_DURATION) / TIMELINE_LENGTH],
-    [0.5, 1],
-  );
+}) {
+  const opacity = useTransform(progress, [start, start + 0.09], [0.3, 1]);
+  const reduced = useReducedMotion();
   return (
-    <motion.span style={{ opacity }} className="inline-block">
-      {children}&nbsp;
+    <motion.span style={{ opacity: reduced ? 1 : opacity }}>
+      {children}{" "}
     </motion.span>
   );
-};
-
-const PopImage = ({
+}
+function Photo({
   progress,
   start,
   src,
@@ -65,91 +42,68 @@ const PopImage = ({
   start: number;
   src: string;
   alt: string;
-}) => {
-  const range = [
-    start / TIMELINE_LENGTH,
-    (start + IMG_DURATION) / TIMELINE_LENGTH,
-  ];
-  const scale = useTransform(progress, range, [0.5, 1]);
-  const opacity = useTransform(progress, range, [0, 1]);
-  return (
-    <motion.img
-      src={src}
-      alt={alt}
-      style={{ scale, opacity }}
-      className="absolute h-[23.25rem] w-[20.63rem] object-cover lg:h-[32.5rem] lg:w-[26.25rem]"
-    />
-  );
-};
-
+}) {
+  const scale = useTransform(progress, [start, start + 0.12], [0.5, 1]);
+  const opacity = useTransform(progress, [start, start + 0.08], [0, 1]);
+  return <motion.img src={src} alt={alt} style={{ scale, opacity }} />;
+}
 export const SectionOne = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const leftRef = useRef<HTMLDivElement>(null);
-
-  // Halves slide apart as the section comes into view
-  const { scrollYProgress: enterRaw } = useScroll({
-    target: leftRef,
-    offset: ["start 0.8", "center 0.5"],
+  const ref = useRef<HTMLElement>(null);
+  const reduced = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start .8", "end end"],
   });
-  const enter = useSpring(enterRaw, SCRUB);
-  const leftX = useTransform(enter, [0, 1], ["50%", "10%"]);
-  const leftY = useTransform(enter, [0, 1], ["-10%", "0%"]);
-  const rightX = useTransform(enter, [0, 1], ["-50%", "-10%"]);
-  const rightY = useTransform(enter, [0, 1], ["-15%", "0%"]);
-
-  // Words and images reveal while the content is stuck
-  const { scrollYProgress: pinnedRaw } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end end"],
+  const progress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
   });
-  const pinned = useSpring(pinnedRaw, SCRUB);
-
-  let wordIndex = 0;
-
+  const left = useTransform(progress, [0, 0.3], ["50%", "0%"]);
+  const right = useTransform(progress, [0, 0.3], ["-50%", "0%"]);
+  let word = 0;
   return (
-    <section ref={sectionRef} className="relative z-[3] h-[200vh]">
-      <div className="sticky top-[33%] flex h-[23.25rem] items-stretch lg:top-[30%] lg:h-[32.5rem]">
-        <motion.div
-          ref={leftRef}
-          style={{ x: leftX, y: leftY }}
-          className="relative z-[2] flex h-full w-1/2 items-center justify-center"
-        >
-          <img
-            src={img1}
-            alt="Portrait one"
-            className="absolute h-[23.25rem] w-[20.63rem] object-cover lg:h-[32.5rem] lg:w-[26.25rem]"
-          />
-          <PopImage
-            progress={pinned}
-            start={IMG2_START}
-            src={img2}
-            alt="Portrait two"
-          />
-          <PopImage
-            progress={pinned}
-            start={IMG3_START}
-            src={img3}
-            alt="Portrait three"
-          />
+    <section
+      ref={ref}
+      className="story"
+      aria-label="The health content overload"
+    >
+      <div className="story-sticky">
+        <motion.div className="photo-column" style={{ x: reduced ? 0 : left }}>
+          <div className="photo-stack">
+            <img
+              src={img1}
+              alt="Person holding a stack of articles against a blue background"
+            />
+            {!reduced && (
+              <>
+                <Photo
+                  progress={progress}
+                  start={0.4}
+                  src={img2}
+                  alt="Portable music player clipped to athletic shorts"
+                />
+                <Photo
+                  progress={progress}
+                  start={0.68}
+                  src={img3}
+                  alt="Close-up portrait wearing dark sunglasses"
+                />
+              </>
+            )}
+          </div>
         </motion.div>
-
-        <motion.div
-          style={{ x: rightX, y: rightY }}
-          className="relative z-[1] flex h-full w-1/2 flex-col items-center justify-center"
-        >
-          <div className="flex max-w-[10.5rem] flex-col gap-[4.25rem]">
-            {words.map((lineWords, i) => (
-              <p
-                key={i}
-                className="text-center font-['Times_New_Roman',TimesNewRoman,Times,Baskerville,Georgia,serif] text-[0.94rem] leading-[120%] text-[#3d433b] lg:text-[1.06rem]"
-              >
-                {lineWords.map((word, j) => (
+        <motion.div className="story-copy" style={{ x: reduced ? 0 : right }}>
+          <div>
+            {lines.map((line) => (
+              <p key={line}>
+                {line.split(" ").map((text) => (
                   <Word
-                    key={j}
-                    progress={pinned}
-                    start={WORD_STAGGER * wordIndex++}
+                    key={word}
+                    progress={progress}
+                    start={0.3 + word++ * 0.019}
                   >
-                    {word}
+                    {text}
                   </Word>
                 ))}
               </p>
