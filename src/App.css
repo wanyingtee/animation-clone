@@ -112,13 +112,9 @@
   text-transform: uppercase;
   margin-top: 52px;
 }
-.footer > .eyebrow {
+.about-closing > .eyebrow {
   max-width: 720px;
   text-align: center;
-}
-.footer-links > div {
-  display: flex;
-  gap: 32px;
 }
 @media (min-width: 1800px) {
   .hero {
@@ -181,18 +177,12 @@
     max-width: 70%;
     margin-top: 16px;
   }
-  .footer .eyebrow {
+  .about-closing .eyebrow {
     font-size: 17px;
     letter-spacing: 12px;
   }
-  .footer {
+  .about-closing {
     gap: 40px;
-  }
-  .footer-links {
-    flex-wrap: wrap;
-  }
-  .footer-links > div {
-    gap: 20px;
   }
 }
 @media (max-width: 600px) {
@@ -246,26 +236,14 @@
     max-width: 80%;
     margin-top: 20px;
   }
-  .footer {
+  .about-closing {
     padding-top: 90px;
     min-height: 70svh;
   }
-  .footer .eyebrow {
+  .about-closing .eyebrow {
     font-size: 14px;
     letter-spacing: 8px;
     max-width: 350px;
-  }
-  .footer-links {
-    justify-content: center;
-    text-align: center;
-    font-size: 13px;
-  }
-  .footer-links > p {
-    width: 100%;
-  }
-  .footer-links > div {
-    width: 100%;
-    justify-content: center;
   }
 }
 @media (max-width: 479px) {
@@ -327,7 +305,7 @@
   .mission p {
     margin-top: 28px;
   }
-  .footer {
+  .about-closing {
     gap: 30px;
   }
 }

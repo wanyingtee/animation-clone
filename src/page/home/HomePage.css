@@ -226,10 +226,6 @@
 .join-anniversary {
   width: clamp(90px, 8vw, 154px);
 }
-.home-footer > div {
-  display: flex;
-  gap: 32px;
-}
 @font-face {
   font-family: Kurt;
   src: url("/assets/kurt-handwritten-regular.otf") format("opentype");
@@ -295,12 +291,6 @@
   }
   .archive-image-frame {
     height: 450px;
-  }
-  .home-footer {
-    flex-wrap: wrap;
-  }
-  .home-footer > div {
-    gap: 20px;
   }
   .join-club-patch {
     right: 8%;
@@ -516,19 +506,6 @@
     max-width: 350px;
     margin-top: 45px;
   }
-  .home-footer {
-    margin: 0 12px 20px;
-    flex-direction: column;
-    text-align: center;
-    gap: 18px;
-    font-size: 13px;
-  }
-  .home-footer p {
-    font-size: 13px;
-  }
-  .home-footer > div {
-    gap: 24px;
-  }
 }
 @media (max-width: 359px) {
   .hero-varsity {
@@ -709,7 +686,4 @@
 .benefit-rule.vertical img {
   translate: -50% 0;
   transform: none;
-}
-.home-footer a:hover {
-  font-style: normal;
 }

@@ -1,5 +1,8 @@
-import { useEffect } from "react";
+import { JoinClubContext } from "./components/JoinClubContext";
+import { JoinClubDialog } from "./components/JoinClubDialog";
+import { useEffect, useState, useCallback } from "react";
 import { MotionConfig } from "framer-motion";
+import { Footer } from "./components/Footer";
 import Navbar from "./components/Navbar";
 import { AboutPage } from "./page/about/AboutPage";
 import { HomePage } from "./page/home/HomePage";
@@ -8,6 +11,8 @@ import { ArchivePage } from "./page/archive/ArchivePage";
 import { currentPage } from "./routes";
 
 export default function App() {
+  const [signupOpen, setSignupOpen] = useState(false);
+  const openSignup = useCallback(() => setSignupOpen(true), []);
   const isAbout = currentPage() === "/about";
   const isArchive = currentPage() === "/archive";
   useEffect(() => {
@@ -29,24 +34,30 @@ export default function App() {
   }, [isAbout, isArchive]);
   return (
     <MotionConfig reducedMotion="user">
-      <div
-        className={
-          isArchive ? "archive-shell" : isAbout ? "about-shell" : "home-shell"
-        }
-      >
-        <a
-          className="skip-link fixed top-[-100px] left-[20px] z-100 [background:white] p-[12px]"
-          href={isArchive ? "#archive" : isAbout ? "#about" : "#home"}
-        >
-          Skip to content
-        </a>
-        <Navbar />
-        {isArchive ? <ArchivePage /> : isAbout ? <AboutPage /> : <HomePage />}
+      <JoinClubContext value={openSignup}>
         <div
-          className="paper fixed inset-[0] z-70 pointer-events-none mix-blend-multiply"
-          aria-hidden="true"
-        />
-      </div>
+          className={
+            isArchive ? "archive-shell" : isAbout ? "about-shell" : "home-shell"
+          }
+        >
+          <a
+            className="skip-link fixed top-[-100px] left-[20px] z-100 [background:white] p-[12px]"
+            href={isArchive ? "#archive" : isAbout ? "#about" : "#home"}
+          >
+            Skip to content
+          </a>
+          <Navbar />
+          {isArchive ? <ArchivePage /> : isAbout ? <AboutPage /> : <HomePage />}
+          <Footer />
+          <div
+            className="paper fixed inset-[0] z-70 pointer-events-none mix-blend-multiply"
+            aria-hidden="true"
+          />
+        </div>
+        {signupOpen && (
+          <JoinClubDialog open onClose={() => setSignupOpen(false)} />
+        )}
+      </JoinClubContext>
     </MotionConfig>
   );
 }

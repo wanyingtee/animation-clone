@@ -1,3 +1,6 @@
+import { ArticleCard } from "../../components/ArticleCard";
+import { ProgramCTA } from "../../components/ProgramCTA";
+import { JoinClubControl } from "../../components/JoinClubControl";
 import { useEffect, useRef, useState } from "react";
 import {
   motion,
@@ -7,7 +10,8 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
-import { FloatingPatch, ScrollReveal } from "./HomeMotion";
+import { ScrollReveal } from "./HomeMotion";
+import { FloatingPatch } from "../../components/FloatingPatch";
 import shoe from "../../assets/patch-winged-shoe.webp";
 import varsity from "../../assets/patch-varsity-letter-o.webp";
 import walking from "../../assets/home-walking-editorial.webp";
@@ -71,11 +75,11 @@ const benefits = [
   },
 ];
 
-function SignupPlaceholder({ perks = false }: { perks?: boolean }) {
+function SignupPrompt({ perks = false }: { perks?: boolean }) {
   return (
     <div
       className={`signup-placeholder w-[clamp(350px,28vw,540px)] max-w-full m-[clamp(40px,3.4vw,65px)_auto_0] text-(length:--home-body) text-left ${perks ? " with-perks" : ""}`}
-      aria-label="Email signup placeholder"
+      aria-label="Join the health club"
     >
       <div className="signup-placeholder-row flex items-center gap-[4px] uppercase">
         <span>Email:</span>
@@ -83,9 +87,7 @@ function SignupPlaceholder({ perks = false }: { perks?: boolean }) {
           className="signup-blank flex-1 self-stretch [border-bottom:1px_solid] min-h-[30px]"
           aria-hidden="true"
         />
-        <span className="signup-label inline-flex justify-center items-center [border:1px_solid_currentColor] rounded-[50%] p-[0.6em_0.95em] whitespace-nowrap uppercase text-(length:--home-body) leading-none">
-          Join club
-        </span>
+        <JoinClubControl behavior="popup" appearance="inline" />
       </div>
       {perks && (
         <p className="signup-perks text-center italic m-[6px_auto_0] max-w-[340px]">
@@ -154,7 +156,7 @@ function HomeHero() {
           <br />
           Completely Free.
         </p>
-        <SignupPlaceholder perks />
+        <SignupPrompt perks />
       </motion.div>
       <FloatingPatch
         src={varsity}
@@ -396,29 +398,6 @@ const articles = [
     tone: "coral",
   },
 ];
-function ArchiveCard({ article }: { article: (typeof articles)[number] }) {
-  return (
-    <article
-      className={`home-archive-card sticky p-[clamp(25px,3vw,58px)_clamp(20px,1.7vw,32px)_clamp(20px,2vw,38px)] text-left [box-shadow:-4px_14px_27px_#39393935] [border-top:1px_solid_#ffffff80] origin-[center_top] ${article.tone}`}
-    >
-      <div className="archive-card-heading grid grid-cols-[1.3fr_1fr_0.7fr] gap-[4%] [align-items:start] mb-[clamp(28px,3vw,58px)]">
-        <h3>{article.title}</h3>
-        <p>{article.copy}</p>
-        <a
-          className="home-oval inline-flex justify-center items-center [border:1px_solid_currentColor] rounded-[50%] p-[0.6em_0.95em] whitespace-nowrap uppercase text-(length:--home-body) leading-none"
-          href={`https://www.ordrhealth.com/archive/${article.path}`}
-          target="_blank"
-          rel="noreferrer"
-        >
-          Read more
-        </a>
-      </div>
-      <div className="archive-image-frame h-[clamp(380px,34vw,650px)] overflow-hidden">
-        <img src={article.image} alt={article.title} loading="lazy" />
-      </div>
-    </article>
-  );
-}
 function Archive() {
   const ref = useRef<HTMLElement>(null);
   const reduced = useReducedMotion();
@@ -439,31 +418,20 @@ function Archive() {
       </ScrollReveal>
       <div className="archive-stack m-[clamp(60px,6vw,116px)_auto_0] pb-[40px] relative">
         {articles.map((article) => (
-          <ArchiveCard key={article.path} article={article} />
+          <ArticleCard
+            key={article.path}
+            variant="home"
+            article={{
+              ...article,
+              description: article.copy,
+              href: `https://www.ordrhealth.com/archive/${article.path}`,
+            }}
+          />
         ))}
       </div>
       <div className="program-reveal relative z-3 max-w-[610px] w-[31vw] min-w-[350px] m-[-65px_auto_0] p-[20px] overflow-visible">
         <motion.div style={{ y: reduced ? 0 : programY }}>
-          <div className="program-card bg-[#3d433b] text-[#e8dec4] p-[clamp(28px,2vw,40px)] [border:1px_solid_#e8dec4] [outline:5px_solid_#3d433b] [box-shadow:0_8px_16px_#0002] text-center">
-            <h3>
-              Find <em>your</em> program
-            </h3>
-            <p>
-              Take a short survey and we’ll match you with a free workout plan
-              that best fits your goals, schedule, and experience.
-            </p>
-            <a
-              href="https://www.ordrhealth.com/archive/the-longevity-protocols"
-              className="home-oval inline-flex justify-center items-center [border:1px_solid_currentColor] rounded-[50%] p-[0.6em_0.95em] whitespace-nowrap uppercase text-(length:--home-body) leading-none"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Get started
-            </a>
-            <span className="handwritten font-[Kurt,cursive] block uppercase text-[18px]">
-              For free
-            </span>
-          </div>
+          <ProgramCTA variant="home" />
         </motion.div>
       </div>
     </section>
@@ -493,7 +461,7 @@ function JoinClub() {
           protocols, and curated health stacks.
         </p>
       </ScrollReveal>
-      <SignupPlaceholder />
+      <SignupPrompt />
       <FloatingPatch
         src={anniversary}
         className="join-anniversary left-[10%] bottom-[20%]"
@@ -510,22 +478,6 @@ export function HomePage() {
       <NewsletterPreview />
       <Archive />
       <JoinClub />
-      <footer className="home-footer m-[0_1.5%_24px] pb-[24px] flex justify-between gap-[20px] items-center [border-bottom:double_8px_currentColor] text-(length:--home-body)">
-        <p>© 2026 ORDR. All rights reserved.</p>
-        <a
-          href="https://www.instagram.com/ordrhealth/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Instagram
-        </a>
-        <div>
-          <a href="https://www.ordrhealth.com/terms-of-conditions">
-            Terms of Conditions
-          </a>
-          <a href="https://www.ordrhealth.com/privacy-policy">Privacy Policy</a>
-        </div>
-      </footer>
     </main>
   );
 }

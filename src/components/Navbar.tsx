@@ -1,3 +1,5 @@
+import { JoinClubControl } from "./JoinClubControl";
+import { OvalControl } from "./OvalControl";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { currentPage, localHref } from "../routes";
@@ -28,7 +30,7 @@ export default function Navbar() {
       if (event.key === "Tab") {
         const items = [
           button.current,
-          ...Array.from(menu.current?.querySelectorAll("a") ?? []),
+          ...Array.from(menu.current?.querySelectorAll("a, button") ?? []),
         ].filter(Boolean) as HTMLElement[];
         const index = items.indexOf(document.activeElement as HTMLElement);
         if (event.shiftKey && index === 0) {
@@ -70,21 +72,18 @@ export default function Navbar() {
             </a>
           ))}
         </nav>
-        <a
-          className="join-link oval uppercase text-[17px] items-center justify-center [border:1px_solid_#3d433b] rounded-[50%] w-[144px] h-[44px] [background:none]"
-          href={localHref("/#join-club")}
-        >
-          Join club
-        </a>
-        <button
+        <JoinClubControl behavior="popup" />
+        <OvalControl
+          as="button"
+          appearance="nav"
           ref={button}
-          className="menu-toggle oval uppercase text-[17px] items-center justify-center [border:1px_solid_#3d433b] rounded-[50%] w-[144px] h-[44px] [background:none]"
+          className="menu-toggle"
           aria-expanded={open}
           aria-controls="mobile-nav"
           onClick={() => setOpen(!open)}
         >
           {open ? "Close" : "Menu"}
-        </button>
+        </OvalControl>
       </div>
       <AnimatePresence>
         {open && (
@@ -111,13 +110,14 @@ export default function Navbar() {
                 {label}
               </motion.a>
             ))}
-            <a
-              className="mobile-join"
-              href={localHref("/#join-club")}
-              onClick={() => setOpen(false)}
-            >
-              Join club ↗
-            </a>
+            <JoinClubControl
+              behavior="popup"
+              appearance="mobile"
+              onClick={() => {
+                setOpen(false);
+                button.current?.focus();
+              }}
+            />
           </motion.nav>
         )}
       </AnimatePresence>

@@ -1,3 +1,4 @@
+import wordmark from "../../assets/ordr-wordmark.svg";
 import { motion, useReducedMotion } from "framer-motion";
 import { SectionOne } from "./SectionOne";
 import { SectionTwo } from "./SectionTwo";
@@ -29,30 +30,15 @@ export const AboutPage = () => {
       </section>
       <SectionOne />
       <SectionTwo />
-      <footer className="footer min-h-[85svh] p-[110px_2.5vw_28px] flex flex-col items-center justify-end gap-[68px]">
+      <section
+        className="about-closing min-h-[85svh] p-[110px_2.5vw_28px] flex flex-col items-center justify-end gap-[68px]"
+        aria-label="Our purpose"
+      >
         <p className="eyebrow tracking-[14px] uppercase">
           All with the goal of bringing everything into
         </p>
-        <img className="w-full" src="/assets/ordr-wordmark.svg" alt="ORDR" />
-        <div className="footer-links w-full flex justify-between items-center gap-[20px] text-[14px] [border-bottom:double_8px_#3d433b] p-[0_0_28px]">
-          <p>© 2026 ORDR. All rights reserved.</p>
-          <a
-            href="https://www.instagram.com/ordrhealth/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Instagram
-          </a>
-          <div>
-            <a href="https://www.ordrhealth.com/terms-of-conditions">
-              Terms of Conditions
-            </a>
-            <a href="https://www.ordrhealth.com/privacy-policy">
-              Privacy Policy
-            </a>
-          </div>
-        </div>
-      </footer>
+        <img className="w-full" src={wordmark} alt="ORDR" />
+      </section>
     </main>
   );
 };
