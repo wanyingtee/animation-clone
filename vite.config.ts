@@ -4,6 +4,6 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: "/animation-clone",
+  base: "/animation-clone/",
   plugins: [react(), tailwindcss()],
 });

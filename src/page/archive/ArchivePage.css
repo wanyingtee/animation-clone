@@ -1,0 +1,692 @@
+.archive-heading-mask {
+  overflow: hidden;
+}
+
+.archive-read-more {
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  flex-shrink: 0;
+  width: 8.5em;
+  height: 2.75em;
+  display: grid;
+  place-items: center;
+}
+
+.archive-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.archive-double-rule {
+  height: 9px;
+  border-block: 1px solid currentColor;
+}
+
+.archive-footer > div {
+  display: flex;
+  gap: 2em;
+}
+
+.archive-membership-label span {
+  position: relative;
+}
+
+.archive-member-card label {
+  text-transform: uppercase;
+}
+/* Scale the paper composition independently of the rest of the site. */
+.archive-page {
+  overflow: clip;
+
+  --archive-unit: min(0.833333vw, 16px);
+  font-size: var(--archive-unit);
+}
+.archive-library {
+  width: 97%;
+  margin: auto;
+  padding-top: max(10.75em, calc(var(--nav-height) + 48px));
+}
+
+.archive-heading-mask h1,
+.archive-program h2 {
+  font:
+    400 8em/1 Condensed,
+    serif;
+  letter-spacing: -0.024em;
+  text-transform: uppercase;
+  text-align: center;
+}
+.archive-papers-window {
+  display: flow-root;
+  overflow: clip;
+
+  height: 139em;
+}
+.archive-papers {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+
+  margin: 44.5em 0 0;
+}
+.archive-paper {
+  position: relative;
+
+  width: 110.31em;
+  max-width: 96%;
+  margin: -40em auto 0;
+  border-top: 1px solid #ffffff80;
+  border-right: 1px solid #ffffff80;
+  transform: rotate(-1deg);
+  box-shadow:
+    inset 1px 0 4px #0004,
+    inset 0 4px 16.6px #ffffff26,
+    -4px 16px 26.8px #39393947,
+    -3px 4px 6.7px #0004;
+  transition: transform 0.5s cubic-bezier(0.86, 0, 0.07, 1);
+}
+.archive-paper:nth-child(even) {
+  transform: rotate(1deg);
+  box-shadow:
+    1px 4px 6px #876f2847,
+    inset 1px 0 4px #0004,
+    inset 0 4px 16.6px #ffffff26,
+    -11px -25px 26.8px #39393912,
+    -3px 4px 6.7px #0004;
+}
+.archive-paper article {
+  display: flex;
+  flex-direction: column;
+
+  padding: 3.75em 2em 2.5em;
+  gap: 2.5em;
+}
+.archive-paper-heading {
+  display: flex;
+  justify-content: space-between;
+
+  align-items: flex-start;
+  gap: 2em;
+  min-height: 11.25em;
+}
+.archive-paper-copy {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 5em;
+}
+.archive-paper h2 {
+  font:
+    400 5.75em/1 Condensed,
+    serif;
+  letter-spacing: -0.0226em;
+  max-width: 7.066em;
+}
+.archive-paper p {
+  font-size: max(1.06em, 13px);
+  line-height: 1.2;
+  max-width: 24.76em;
+}
+
+.archive-read-more span {
+  text-transform: uppercase;
+
+  font-size: max(1.06em, 13px);
+}
+.archive-cover {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  overflow: clip;
+
+  align-items: center;
+  height: 41em;
+  max-height: 41em;
+}
+
+.archive-program {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+
+  padding: 19.5em 1.5% 20em;
+  gap: 1.5em;
+}
+.archive-program > p {
+  max-width: 19.63em;
+  text-align: center;
+  font-size: max(1.06em, 14px);
+  line-height: 1.2;
+}
+.archive-program-action {
+  position: relative;
+
+  margin-top: 1.75em;
+}
+.archive-program-button {
+  text-transform: uppercase;
+
+  width: 14em;
+  height: 4em;
+  border: none;
+  background: url("../../assets/program-button-oval.svg") center/100% 100%
+    no-repeat;
+  color: inherit;
+  font-size: max(1.06em, 14px);
+  transition: transform 0.3s ease;
+}
+.archive-program-button:hover {
+  transform: rotate(-5deg);
+}
+.archive-free {
+  position: absolute;
+  letter-spacing: 0.15em;
+  white-space: nowrap;
+
+  left: 100%;
+  top: 60%;
+  width: 5em;
+  font:
+    2em/1 Kurt,
+    cursive;
+  transform: rotate(-10deg);
+}
+.archive-free img {
+  width: 100%;
+  margin-top: 0.2em;
+}
+.archive-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin: 0 auto 1.5em;
+  width: 97%;
+  padding-bottom: 2em;
+  border-bottom: 8px double currentColor;
+  gap: 20px;
+  font-size: max(1em, 13px);
+}
+
+/* The reference fades an olive membership card over a translucent white scrim. */
+.archive-signup {
+  --card-unit: clamp(11px, 0.833333vw, 16px);
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 48px 20px;
+  border: 0;
+  background: transparent;
+  color: #e8dec4;
+  overflow: auto;
+  font-size: var(--card-unit);
+}
+.archive-signup[open] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: archive-popup-in 0.5s ease both;
+}
+.archive-signup::backdrop {
+  background: #fffc;
+  animation: archive-popup-in 0.5s ease both;
+}
+.archive-signup[data-closing] {
+  animation: archive-popup-out 0.35s ease both;
+}
+.archive-signup[data-closing]::backdrop {
+  animation: archive-popup-out 0.35s ease both;
+}
+.archive-member-card {
+  max-width: 100%;
+  flex-shrink: 0;
+  position: relative;
+  background: #3d433b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 58.38em;
+  padding: 4em 10.3em;
+  gap: 3.25em;
+}
+.archive-member-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: url("/assets/paper-texture-overlay.webp") center/100% 100%;
+  mix-blend-mode: multiply;
+  opacity: 0.45;
+}
+.archive-member-border {
+  position: absolute;
+  pointer-events: none;
+
+  border: 1px solid #e8dec4;
+  inset: 2% 1.5%;
+}
+.archive-member-card h2 {
+  font:
+    400 5.75em/1 Condensed,
+    serif;
+  letter-spacing: -0.01em;
+  text-align: center;
+  text-transform: uppercase;
+  margin: 0;
+  white-space: nowrap;
+}
+.archive-membership-copy {
+  text-align: center;
+
+  margin-top: -1.25em;
+}
+.archive-membership-copy > p:last-child {
+  font-size: 1.06em;
+  line-height: 1.2;
+  margin-top: 1em;
+}
+.archive-membership-label {
+  text-transform: uppercase;
+  font:
+    1.25em/1.4 Heros,
+    sans-serif;
+  letter-spacing: 0.704em;
+  white-space: nowrap;
+}
+
+.archive-membership-label img {
+  position: absolute;
+  inset: -45% auto auto -12%;
+  width: 115%;
+  max-width: none;
+  height: 180%;
+}
+.archive-signup-close {
+  position: absolute;
+  right: -3em;
+  top: -2.5em;
+  width: 7em;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #e8dec4;
+  border-radius: 50%;
+  transform: rotate(-15deg);
+  transition: transform 0.3s;
+  z-index: 1;
+}
+.archive-signup-close:hover {
+  transform: rotate(0);
+}
+.archive-member-card form {
+  width: 100%;
+  display: grid;
+  align-items: center;
+  gap: 0;
+  position: relative;
+
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  font-size: 1.06em;
+}
+
+.archive-member-card input {
+  min-width: 0;
+  width: 100%;
+  height: 3em;
+  border: 0;
+  border-bottom: 1px solid #e8dec4;
+  padding: 0.5em;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  border-radius: 0;
+}
+.archive-member-card input:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 3px;
+}
+.archive-member-card form button {
+  padding: 1em 0.9em;
+  border: 0;
+  background: url("../../assets/signup-join-club-oval.svg") center/contain
+    no-repeat;
+  color: inherit;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+.archive-dues {
+  opacity: 0.5;
+  font-style: italic;
+
+  max-width: 4em;
+  padding-left: 0.5em;
+  font-size: 0.94em;
+}
+.archive-demo-result {
+  text-align: center;
+
+  font-size: max(1.06em, 14px);
+  line-height: 1.3;
+}
+@keyframes archive-popup-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes archive-popup-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@media (max-width: 991px) {
+  .archive-signup {
+    --card-unit: clamp(12px, 1.6145vw, 16px);
+  }
+  .archive-member-card {
+    width: 43.5em;
+    padding: 2.5em 6.25em;
+    gap: 2.5em;
+  }
+  .archive-member-card h2 {
+    font-size: 3.88em;
+  }
+  .archive-membership-label {
+    font-size: 1.06em;
+  }
+}
+@media (max-width: 767px) {
+  .archive-signup {
+    --card-unit: clamp(12px, 2.086vw, 16px);
+  }
+  .archive-member-card {
+    width: 39em;
+    padding-inline: 2.5em;
+  }
+  .archive-member-card h2 {
+    font-size: 3.19em;
+  }
+  .archive-signup-close {
+    right: -1em;
+    width: 5em;
+    top: -1.5em;
+  }
+}
+@media (max-width: 479px) {
+  .archive-signup {
+    --card-unit: 16px;
+    padding: 40px 20px;
+  }
+  .archive-member-card {
+    width: 21.25em;
+    min-height: 26em;
+    padding: 1.5em 2em 2em;
+    gap: 1.25em;
+  }
+  .archive-member-card h2 {
+    font-size: clamp(28px, 8.45vw, 33px);
+  }
+  .archive-membership-copy {
+    margin-top: 0;
+  }
+  .archive-membership-label {
+    font-size: 0.88em;
+    letter-spacing: 0.55em;
+    white-space: normal;
+  }
+  .archive-membership-copy > p:last-child {
+    font-size: 0.94em;
+  }
+  .archive-member-card form {
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 0.5em;
+    font-size: 0.94em;
+  }
+  .archive-member-card form button {
+    grid-column: 1 / -1;
+    justify-self: center;
+    margin-top: 0.75em;
+  }
+  .archive-dues {
+    grid-column: 1 / -1;
+    justify-self: center;
+    max-width: none;
+    padding: 0;
+  }
+  .archive-signup-close {
+    width: 3.75em;
+    top: -1.25em;
+    right: -0.75em;
+  }
+}
+@media (max-height: 560px) {
+  .archive-signup[open] {
+    align-items: flex-start;
+  }
+}
+@media (min-width: 992px) and (hover: hover) {
+  .archive-paper:hover,
+  .archive-paper:focus-within {
+    transform: translateY(-4em) rotate(0);
+  }
+}
+@media (max-width: 991px) {
+  .archive-page {
+    --archive-unit: 1.6145vw;
+  }
+  .archive-heading-mask h1,
+  .archive-program h2 {
+    font-size: 5.5em;
+  }
+  .archive-papers-window {
+    height: 104.06em;
+  }
+  .archive-papers {
+    margin-top: 26em;
+  }
+  .archive-paper {
+    max-width: 93%;
+    margin-top: -25em;
+  }
+  .archive-paper article {
+    padding: 2em;
+    gap: 2em;
+  }
+  .archive-paper-heading {
+    min-height: auto;
+  }
+  .archive-paper-copy {
+    flex-direction: column;
+    gap: 1.25em;
+    max-width: 37.5em;
+  }
+  .archive-paper h2 {
+    font-size: 3.88em;
+  }
+  .archive-paper p {
+    font-size: max(0.94em, 14px);
+    max-width: 40em;
+  }
+  .archive-cover {
+    max-height: 26em;
+    align-items: flex-start;
+  }
+  .archive-program {
+    padding-top: 15.5em;
+    padding-bottom: 16em;
+    gap: 0.5em;
+  }
+  .archive-program-action {
+    margin-top: 2em;
+  }
+  .archive-paper:focus-within {
+    transform: rotate(0);
+  }
+}
+@media (max-width: 767px) {
+  .archive-page {
+    --archive-unit: 2.086vw;
+  }
+  .archive-heading-mask h1,
+  .archive-program h2 {
+    font-size: 4.81em;
+    letter-spacing: 0;
+  }
+  .archive-papers-window {
+    height: 120em;
+  }
+  .archive-papers {
+    margin-top: 23.5em;
+  }
+  .archive-paper {
+    max-width: 41.38em;
+    margin-top: -23em;
+  }
+  .archive-paper h2 {
+    font-size: 3.19em;
+  }
+  .archive-paper p {
+    max-width: 29em;
+  }
+  .archive-cover {
+    height: 28em;
+    max-height: 28em;
+  }
+  .archive-program {
+    padding-top: 14.5em;
+    padding-bottom: 19em;
+  }
+}
+@media (max-width: 479px) {
+  .archive-page {
+    --archive-unit: 4.10256vw;
+  }
+  .archive-library {
+    width: 94%;
+  }
+  .archive-heading-mask h1,
+  .archive-program h2 {
+    font-size: 2.75em;
+  }
+  .archive-papers-window {
+    height: auto;
+    max-height: 130em;
+    padding-bottom: 3em;
+    margin-top: 1em;
+  }
+  .archive-papers {
+    margin-top: 23em;
+  }
+  .archive-paper {
+    width: 19.38em;
+    max-width: 90%;
+    margin-top: -22.5em;
+  }
+  .archive-paper article {
+    padding: 1.5em 1.25em 1.25em;
+    gap: 1.25em;
+  }
+  .archive-paper-heading {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25em;
+  }
+  .archive-paper-copy {
+    gap: 0.75em;
+    width: 100%;
+  }
+  .archive-paper h2 {
+    font-size: 2.06em;
+    max-width: none;
+  }
+  .archive-paper p {
+    font-size: max(0.94em, 14px);
+  }
+  .archive-read-more {
+    height: 2.75em;
+  }
+  .archive-cover {
+    height: 23.75em;
+    max-height: 24em;
+  }
+  .archive-program {
+    padding-top: 12.5em;
+    padding-bottom: 18em;
+    gap: 1em;
+  }
+  .archive-program > p {
+    max-width: 19.63em;
+    font-size: max(0.94em, 14px);
+  }
+  .archive-program-action {
+    margin-top: 0.5em;
+  }
+  .archive-free {
+    left: 75%;
+    top: 110%;
+    font-size: 1.8em;
+  }
+  .archive-footer {
+    width: 94%;
+    flex-direction: column;
+    text-align: center;
+    font-size: 13px;
+    gap: 18px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .archive-heading-mask h1 {
+    transform: none !important;
+  }
+}
+.archive-program-button {
+  width: 8.5em;
+  height: 2.75em;
+}
+.archive-free {
+  left: 55%;
+  top: 90%;
+  font-size: 1.5em;
+}
+/* Let longer copy and text zoom grow the stack without clipping its final link. */
+.archive-papers-window {
+  height: auto;
+  max-height: none;
+  padding-bottom: 0;
+  /* Mask the last image beneath the straight divider, preserving its framing. */
+  clip-path: inset(0 0 12em);
+  margin-bottom: -12em;
+}
+.archive-paper:last-child .archive-cover {
+  height: 15em;
+  max-height: 15em;
+}
+
+/* Archive overrides for shared navigation and decorative patches. */
+.archive-newspapers { width: 12.06em; right: 13%; top: 42%; }
+@media (max-width: 991px) {
+  .archive-newspapers { width: 7.44em; right: 10%; top: 55%; }
+}
+@media (max-width: 479px) {
+  .archive-newspapers { width: 6.31em; top: auto; bottom: 5em; right: 12%; }
+}
+@media (min-width: 992px) {
+  .archive-shell { --nav-height: min(4.7917vw, 92px); }
+  .archive-shell .brand, .archive-shell .oval, .archive-shell .desktop-nav {
+    font-size: clamp(13px, .8854vw, 17px);
+  }
+  .archive-shell .oval { width: min(7.5vw, 144px); height: min(2.2917vw, 44px); }
+}

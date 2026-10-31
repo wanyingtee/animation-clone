@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { currentPage, localHref } from "../routes";
 const base = "https://www.ordrhealth.com";
 const links = [
   ["Home", "/"],
@@ -9,9 +10,9 @@ const links = [
 ];
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const currentPath = window.location.pathname.replace(/\/$/, "") || "/";
+  const currentPath = currentPage();
   const linkTo = (path: string) =>
-    path === "/" || path === "/about" ? path : base + path;
+    ["/", "/about", "/archive"].includes(path) ? localHref(path) : base + path;
   const button = useRef<HTMLButtonElement>(null);
   const menu = useRef<HTMLElement>(null);
   useEffect(() => {
@@ -49,7 +50,7 @@ export default function Navbar() {
   return (
     <header className="header">
       <div className="nav-bar">
-        <a className="brand" href="/">
+        <a className="brand" href={localHref("/")}>
           Ordr
         </a>
         <nav className="desktop-nav" aria-label="Main navigation">
@@ -63,7 +64,7 @@ export default function Navbar() {
             </a>
           ))}
         </nav>
-        <a className="join-link oval" href="/#join-club">
+        <a className="join-link oval" href={localHref("/#join-club")}>
           Join club
         </a>
         <button
@@ -103,7 +104,7 @@ export default function Navbar() {
             ))}
             <a
               className="mobile-join"
-              href="/#join-club"
+              href={localHref("/#join-club")}
               onClick={() => setOpen(false)}
             >
               Join club ↗
