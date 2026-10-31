@@ -1,35 +1,63 @@
-import { useEffect } from "react";
+import { JoinClubContext } from "./components/JoinClubContext";
+import { JoinClubDialog } from "./components/JoinClubDialog";
+import { useEffect, useState, useCallback } from "react";
 import { MotionConfig } from "framer-motion";
+import { Footer } from "./components/Footer";
 import Navbar from "./components/Navbar";
 import { AboutPage } from "./page/about/AboutPage";
 import { HomePage } from "./page/home/HomePage";
 import "./App.css";
+import { ArchivePage } from "./page/archive/ArchivePage";
+import { currentPage } from "./routes";
 
 export default function App() {
-  const isAbout = window.location.pathname.replace(/\/$/, "") === "/about";
+  const [signupOpen, setSignupOpen] = useState(false);
+  const openSignup = useCallback(() => setSignupOpen(true), []);
+  const isAbout = currentPage() === "/about";
+  const isArchive = currentPage() === "/archive";
   useEffect(() => {
-    document.title = isAbout
-      ? "About ORDR | We Filter. We Translate. We Deliver."
-      : "Health & Wellness News in 5-Minutes | ORDR";
+    document.title = isArchive
+      ? "Archive: Sample Health & Fitness Newsletters | ORDR"
+      : isAbout
+        ? "About ORDR | We Filter. We Translate. We Deliver."
+        : "Health & Wellness News in 5-Minutes | ORDR";
     document
       .querySelector('meta[name="description"]')
       ?.setAttribute(
         "content",
-        isAbout
-          ? "We love health. We hate health content. We filter, we translate, we deliver."
-          : "Clear, actionable wellness insights delivered in a 5-minute weekly newsletter. Health, curated by ORDR.",
+        isArchive
+          ? "Explore the ORDR archive of health guides, wellness protocols, and workout programs."
+          : isAbout
+            ? "We love health. We hate health content. We filter, we translate, we deliver."
+            : "Clear, actionable wellness insights delivered in a 5-minute weekly newsletter. Health, curated by ORDR.",
       );
-  }, [isAbout]);
+  }, [isAbout, isArchive]);
   return (
     <MotionConfig reducedMotion="user">
-      <div className={isAbout ? "about-shell" : "home-shell"}>
-        <a className="skip-link" href={isAbout ? "#about" : "#home"}>
-          Skip to content
-        </a>
-        <Navbar />
-        {isAbout ? <AboutPage /> : <HomePage />}
-        <div className="paper" aria-hidden="true" />
-      </div>
+      <JoinClubContext value={openSignup}>
+        <div
+          className={
+            isArchive ? "archive-shell" : isAbout ? "about-shell" : "home-shell"
+          }
+        >
+          <a
+            className="skip-link fixed top-[-100px] left-[20px] z-100 [background:white] p-[12px]"
+            href={isArchive ? "#archive" : isAbout ? "#about" : "#home"}
+          >
+            Skip to content
+          </a>
+          <Navbar />
+          {isArchive ? <ArchivePage /> : isAbout ? <AboutPage /> : <HomePage />}
+          <Footer />
+          <div
+            className="paper fixed inset-[0] z-70 pointer-events-none mix-blend-multiply"
+            aria-hidden="true"
+          />
+        </div>
+        {signupOpen && (
+          <JoinClubDialog open onClose={() => setSignupOpen(false)} />
+        )}
+      </JoinClubContext>
     </MotionConfig>
   );
 }

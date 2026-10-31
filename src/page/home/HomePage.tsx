@@ -1,3 +1,6 @@
+import { ArticleCard } from "../../components/ArticleCard";
+import { ProgramCTA } from "../../components/ProgramCTA";
+import { JoinClubControl } from "../../components/JoinClubControl";
 import { useEffect, useRef, useState } from "react";
 import {
   motion,
@@ -7,7 +10,8 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
-import { FloatingPatch, ScrollReveal } from "./HomeMotion";
+import { ScrollReveal } from "./HomeMotion";
+import { FloatingPatch } from "../../components/FloatingPatch";
 import shoe from "../../assets/patch-winged-shoe.webp";
 import varsity from "../../assets/patch-varsity-letter-o.webp";
 import walking from "../../assets/home-walking-editorial.webp";
@@ -71,19 +75,22 @@ const benefits = [
   },
 ];
 
-function SignupPlaceholder({ perks = false }: { perks?: boolean }) {
+function SignupPrompt({ perks = false }: { perks?: boolean }) {
   return (
     <div
-      className={`signup-placeholder${perks ? " with-perks" : ""}`}
-      aria-label="Email signup placeholder"
+      className={`signup-placeholder w-[clamp(350px,28vw,540px)] max-w-full m-[clamp(40px,3.4vw,65px)_auto_0] text-(length:--home-body) text-left ${perks ? " with-perks" : ""}`}
+      aria-label="Join the health club"
     >
-      <div className="signup-placeholder-row">
+      <div className="signup-placeholder-row flex items-center gap-[4px] uppercase">
         <span>Email:</span>
-        <span className="signup-blank" aria-hidden="true" />
-        <span className="signup-label">Join club</span>
+        <span
+          className="signup-blank flex-1 self-stretch [border-bottom:1px_solid] min-h-[30px]"
+          aria-hidden="true"
+        />
+        <JoinClubControl behavior="popup" appearance="inline" />
       </div>
       {perks && (
-        <p className="signup-perks">
+        <p className="signup-perks text-center italic m-[6px_auto_0] max-w-[340px]">
           Club Member perks include workout programs &amp; health blueprints.{" "}
           <span>Completely free. Leave whenever.</span>
         </p>
@@ -95,10 +102,17 @@ function SignupPlaceholder({ perks = false }: { perks?: boolean }) {
 function HomeHero() {
   const reduced = useReducedMotion();
   return (
-    <section className="home-hero" aria-labelledby="home-title">
-      <FloatingPatch src={shoe} className="hero-shoe" rotation={-9} />
+    <section
+      className="home-hero relative text-center p-[clamp(115px,9vw,173px)_20px_clamp(96px,7.3vw,140px)]"
+      aria-labelledby="home-title"
+    >
+      <FloatingPatch
+        src={shoe}
+        className="hero-shoe left-[19.5%] top-[19%]"
+        rotation={-9}
+      />
       <motion.p
-        className="home-eyebrow"
+        className="home-eyebrow tracking-[clamp(7px,0.73vw,14px)] uppercase pl-[0.7em]"
         initial={reduced ? false : { opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
@@ -107,7 +121,11 @@ function HomeHero() {
       </motion.p>
       <h1 id="home-title" aria-label="Health Curated">
         {["Health", "Curated"].map((line, lineIndex) => (
-          <span className="hero-line-mask" key={line} aria-hidden="true">
+          <span
+            className="hero-line-mask block overflow-hidden py-[0.05em] my-[-0.05em]"
+            key={line}
+            aria-hidden="true"
+          >
             {Array.from(line).map((letter, letterIndex) => (
               <span className="hero-char-mask" key={letterIndex}>
                 <motion.span
@@ -131,16 +149,20 @@ function HomeHero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, delay: 0.4 }}
       >
-        <p className="home-intro">
+        <p className="home-intro mt-[clamp(28px,1.7vw,34px)]">
           Clear, actionable wellness insights delivered
           <br />
           in a 5-minute weekly newsletter.
           <br />
           Completely Free.
         </p>
-        <SignupPlaceholder perks />
+        <SignupPrompt perks />
       </motion.div>
-      <FloatingPatch src={varsity} className="hero-varsity" rotation={5} />
+      <FloatingPatch
+        src={varsity}
+        className="hero-varsity right-[8%] bottom-[6%]"
+        rotation={5}
+      />
     </section>
   );
 }
@@ -184,7 +206,9 @@ function Benefits() {
     offset: ["start end", "end start"],
   });
   const delayedProgress = useMotionValue(scrollYProgress.get());
-  const [axesComplete, setAxesComplete] = useState(delayedProgress.get() >= 0.5);
+  const [axesComplete, setAxesComplete] = useState(
+    delayedProgress.get() >= 0.5,
+  );
   useMotionValueEvent(delayedProgress, "change", (progress) => {
     setAxesComplete(progress >= 0.5);
   });
@@ -216,17 +240,21 @@ function Benefits() {
   const starRotation = useTransform(delayedProgress, [0.47, 0.5], [180, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.5], [1.08, 1]);
   return (
-    <section ref={ref} className="home-benefits" aria-label="Why ORDR">
-      <div className="home-photo">
+    <section
+      ref={ref}
+      className="home-benefits relative m-[0_1.5%] pb-[clamp(100px,10.4vw,200px)]"
+      aria-label="Why ORDR"
+    >
+      <div className="home-photo h-(--photo-height) overflow-hidden">
         <motion.img
           src={walking}
           alt="Two people walking in sportswear with a gym bag"
           style={{ scale: reduced ? 1 : scale }}
         />
       </div>
-      <div className="benefits-grid">
+      <div className="benefits-grid h-(--grid-height) grid grid-cols-[1fr_1fr] relative mt-[clamp(50px,4.16vw,80px)]">
         <motion.div
-          className="benefit-rule horizontal"
+          className="benefit-rule absolute pointer-events-none bg-[#3d433b] horizontal"
           aria-hidden="true"
           style={{ scaleX: reduced ? 1 : axisScale }}
         >
@@ -248,7 +276,7 @@ function Benefits() {
           />
         </motion.div>
         <motion.div
-          className="benefit-rule vertical"
+          className="benefit-rule absolute pointer-events-none bg-[#3d433b] vertical"
           aria-hidden="true"
           style={{ scaleY: reduced ? 1 : axisScale }}
         >
@@ -270,20 +298,35 @@ function Benefits() {
           />
         </motion.div>
         {benefits.map((item, i) => (
-          <article className="benefit" key={item.title}>
-            <ScrollReveal revealed={axesComplete} duration={1.2} delay={0.03 + (i % 2) * 0.1}>
+          <article
+            className="benefit flex flex-col items-center justify-center text-center gap-[14px] p-[35px_25px]"
+            key={item.title}
+          >
+            <ScrollReveal
+              revealed={axesComplete}
+              duration={1.2}
+              delay={0.03 + (i % 2) * 0.1}
+            >
               <h2>{item.title}</h2>
             </ScrollReveal>
-            <ScrollReveal revealed={axesComplete} duration={1.2} delay={0.03 + 0.08 + (i % 2) * 0.1}>
+            <ScrollReveal
+              revealed={axesComplete}
+              duration={1.2}
+              delay={0.03 + 0.08 + (i % 2) * 0.1}
+            >
               <p>{item.copy}</p>
             </ScrollReveal>
           </article>
         ))}
       </div>
-      <div ref={crestTrackRef} className="crest-track" aria-hidden="true">
+      <div
+        ref={crestTrackRef}
+        className="crest-track absolute top-[calc(var(--photo-height)*0.5)] bottom-[calc(clamp(100px,10.4vw,200px)+var(--grid-height)/2-clamp(68px,6.2vw,118px))] left-[50%] w-[clamp(136px,12.4vw,236px)] pointer-events-none"
+        aria-hidden="true"
+      >
         <motion.div
           ref={crestRef}
-          className="crest-disc"
+          className="crest-disc relative top-0 grid place-items-center aspect-[1] bg-transparent p-[clamp(16px,1.5vw,28px)]"
           style={{ y: reduced ? 0 : crestY }}
         >
           <img src={crest} alt="" />
@@ -304,12 +347,16 @@ function NewsletterPreview() {
   return (
     <section
       ref={ref}
-      className="newsletter-preview"
+      className="newsletter-preview relative m-[0_1.5%] h-[clamp(600px,46.88vw,900px)]"
       aria-labelledby="newsletter-title"
     >
-      <FloatingPatch src={runner} className="preview-runner" rotation={-9} />
+      <FloatingPatch
+        src={runner}
+        className="preview-runner left-0 top-[4%]"
+        rotation={-9}
+      />
       <motion.div
-        className="newsletter-clip"
+        className="newsletter-clip h-full overflow-hidden bg-[#3d433b] text-[#e8dec4] text-center pt-[clamp(80px,7.3vw,140px)] flex flex-col items-center gap-[clamp(32px,2.9vw,56px)]"
         style={{ width: reduced ? "97%" : width }}
       >
         <ScrollReveal>
@@ -320,13 +367,17 @@ function NewsletterPreview() {
           </h2>
         </ScrollReveal>
         <motion.img
-          className="newsletter-sheet"
+          className="newsletter-sheet w-[clamp(330px,27vw,520px)] max-w-[75%] h-auto origin-[top_center]"
           src={newsletter}
           alt="The Weekly Order newsletter preview"
           loading="lazy"
         />
       </motion.div>
-      <FloatingPatch src={atlas} className="preview-atlas" rotation={5} />
+      <FloatingPatch
+        src={atlas}
+        className="preview-atlas right-[7%] bottom-[-3%]"
+        rotation={5}
+      />
     </section>
   );
 }
@@ -347,27 +398,6 @@ const articles = [
     tone: "coral",
   },
 ];
-function ArchiveCard({ article }: { article: (typeof articles)[number] }) {
-  return (
-    <article className={`home-archive-card ${article.tone}`}>
-      <div className="archive-card-heading">
-        <h3>{article.title}</h3>
-        <p>{article.copy}</p>
-        <a
-          className="home-oval"
-          href={`https://www.ordrhealth.com/archive/${article.path}`}
-          target="_blank"
-          rel="noreferrer"
-        >
-          Read more
-        </a>
-      </div>
-      <div className="archive-image-frame">
-        <img src={article.image} alt={article.title} loading="lazy" />
-      </div>
-    </article>
-  );
-}
 function Archive() {
   const ref = useRef<HTMLElement>(null);
   const reduced = useReducedMotion();
@@ -379,38 +409,29 @@ function Archive() {
   return (
     <section
       ref={ref}
-      className="home-archive"
+      className="home-archive p-[clamp(110px,10.4vw,200px)_4%_0] relative text-center"
       id="archive"
       aria-labelledby="archive-title"
     >
       <ScrollReveal>
         <h2 id="archive-title">Archive</h2>
       </ScrollReveal>
-      <div className="archive-stack">
+      <div className="archive-stack m-[clamp(60px,6vw,116px)_auto_0] pb-[40px] relative">
         {articles.map((article) => (
-          <ArchiveCard key={article.path} article={article} />
+          <ArticleCard
+            key={article.path}
+            variant="home"
+            article={{
+              ...article,
+              description: article.copy,
+              href: `https://www.ordrhealth.com/archive/${article.path}`,
+            }}
+          />
         ))}
       </div>
-      <div className="program-reveal">
+      <div className="program-reveal relative z-3 max-w-[610px] w-[31vw] min-w-[350px] m-[-65px_auto_0] p-[20px] overflow-visible">
         <motion.div style={{ y: reduced ? 0 : programY }}>
-          <div className="program-card">
-            <h3>
-              Find <em>your</em> program
-            </h3>
-            <p>
-              Take a short survey and we’ll match you with a free workout plan
-              that best fits your goals, schedule, and experience.
-            </p>
-            <a
-              href="https://www.ordrhealth.com/archive/the-longevity-protocols"
-              className="home-oval"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Get started
-            </a>
-            <span className="handwritten">For free</span>
-          </div>
+          <ProgramCTA variant="home" />
         </motion.div>
       </div>
     </section>
@@ -418,13 +439,21 @@ function Archive() {
 }
 function JoinClub() {
   return (
-    <section id="join-club" className="home-join" aria-labelledby="join-title">
-      <FloatingPatch src={club} className="join-club-patch" rotation={-10} />
+    <section
+      id="join-club"
+      className="home-join relative p-[clamp(190px,17vw,326px)_20px_clamp(180px,20vw,384px)] text-center scroll-mt-(--nav-height)"
+      aria-labelledby="join-title"
+    >
+      <FloatingPatch
+        src={club}
+        className="join-club-patch right-[12%] top-[15%]"
+        rotation={-10}
+      />
       <ScrollReveal>
         <h2 id="join-title">Join the club</h2>
       </ScrollReveal>
       <ScrollReveal>
-        <p className="home-join-copy">
+        <p className="home-join-copy mt-[clamp(28px,2.2vw,42px)]">
           Get free access to the library of exclusive
           <br />
           workout programs, evidence-based wellness
@@ -432,10 +461,10 @@ function JoinClub() {
           protocols, and curated health stacks.
         </p>
       </ScrollReveal>
-      <SignupPlaceholder />
+      <SignupPrompt />
       <FloatingPatch
         src={anniversary}
-        className="join-anniversary"
+        className="join-anniversary left-[10%] bottom-[20%]"
         rotation={10}
       />
     </section>
@@ -443,28 +472,12 @@ function JoinClub() {
 }
 export function HomePage() {
   return (
-    <main id="home" className="home-page">
+    <main id="home" className="home-page w-full overflow-clip">
       <HomeHero />
       <Benefits />
       <NewsletterPreview />
       <Archive />
       <JoinClub />
-      <footer className="home-footer">
-        <p>© 2026 ORDR. All rights reserved.</p>
-        <a
-          href="https://www.instagram.com/ordrhealth/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Instagram
-        </a>
-        <div>
-          <a href="https://www.ordrhealth.com/terms-of-conditions">
-            Terms of Conditions
-          </a>
-          <a href="https://www.ordrhealth.com/privacy-policy">Privacy Policy</a>
-        </div>
-      </footer>
     </main>
   );
 }

@@ -1,5 +1,8 @@
+import { JoinClubControl } from "./JoinClubControl";
+import { OvalControl } from "./OvalControl";
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { currentPage, localHref } from "../routes";
 const base = "https://www.ordrhealth.com";
 const links = [
   ["Home", "/"],
@@ -9,9 +12,13 @@ const links = [
 ];
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const currentPath = window.location.pathname.replace(/\/$/, "") || "/";
+  const currentPath = currentPage();
+  const reducedMotion = useReducedMotion();
+  const animateEntrance =
+    (currentPath === "/" || currentPath === "/about") && !reducedMotion;
+  const [entranceComplete, setEntranceComplete] = useState(false);
   const linkTo = (path: string) =>
-    path === "/" || path === "/about" ? path : base + path;
+    ["/", "/about", "/archive"].includes(path) ? localHref(path) : base + path;
   const button = useRef<HTMLButtonElement>(null);
   const menu = useRef<HTMLElement>(null);
   useEffect(() => {
@@ -27,7 +34,7 @@ export default function Navbar() {
       if (event.key === "Tab") {
         const items = [
           button.current,
-          ...Array.from(menu.current?.querySelectorAll("a") ?? []),
+          ...Array.from(menu.current?.querySelectorAll("a, button") ?? []),
         ].filter(Boolean) as HTMLElement[];
         const index = items.indexOf(document.activeElement as HTMLElement);
         if (event.shiftKey && index === 0) {
@@ -47,12 +54,29 @@ export default function Navbar() {
     };
   }, [open]);
   return (
-    <header className="header">
-      <div className="nav-bar">
-        <a className="brand" href="/">
+    <motion.header
+      className="fixed inset-[0_0_auto] z-50 bg-[#fff] h-(--nav-height)"
+      initial={animateEntrance ? { y: "-100%" } : false}
+      animate={{ y: 0 }}
+      transition={{
+        delay: animateEntrance ? 0.8 : 0,
+        duration: animateEntrance ? 0.7 : 0,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+      inert={animateEntrance && !entranceComplete}
+      onAnimationComplete={() => setEntranceComplete(true)}
+    >
+      <div className="nav-bar w-[97%] h-full m-auto flex items-center justify-between [border-bottom:3px_double_#3d433b] pb-[8px] relative">
+        <a
+          className="brand uppercase text-[17px] w-[144px]"
+          href={localHref("/")}
+        >
           Ordr
         </a>
-        <nav className="desktop-nav" aria-label="Main navigation">
+        <nav
+          className="desktop-nav flex gap-[40px] text-[17px]"
+          aria-label="Main navigation"
+        >
           {links.map(([label, path]) => (
             <a
               key={label}
@@ -63,25 +87,25 @@ export default function Navbar() {
             </a>
           ))}
         </nav>
-        <a className="join-link oval" href="/#join-club">
-          Join club
-        </a>
-        <button
+        <JoinClubControl behavior="popup" />
+        <OvalControl
+          as="button"
+          appearance="nav"
           ref={button}
-          className="menu-toggle oval"
+          className="menu-toggle"
           aria-expanded={open}
           aria-controls="mobile-nav"
           onClick={() => setOpen(!open)}
         >
           {open ? "Close" : "Menu"}
-        </button>
+        </OvalControl>
       </div>
       <AnimatePresence>
         {open && (
           <motion.nav
             ref={menu}
             id="mobile-nav"
-            className="mobile-nav"
+            className="mobile-nav fixed inset-[var(--nav-height)_0_0] bg-[#fff] flex flex-col justify-center p-[30px] gap-[20px]"
             aria-label="Mobile navigation"
             initial={{ clipPath: "inset(0 0 100% 0)" }}
             animate={{ clipPath: "inset(0 0 0% 0)" }}
@@ -101,16 +125,17 @@ export default function Navbar() {
                 {label}
               </motion.a>
             ))}
-            <a
-              className="mobile-join"
-              href="/#join-club"
-              onClick={() => setOpen(false)}
-            >
-              Join club ↗
-            </a>
+            <JoinClubControl
+              behavior="popup"
+              appearance="mobile"
+              onClick={() => {
+                setOpen(false);
+                button.current?.focus();
+              }}
+            />
           </motion.nav>
         )}
       </AnimatePresence>
-    </header>
+    </motion.header>
   );
 }

@@ -65,12 +65,15 @@ export const SectionOne = () => {
   return (
     <section
       ref={ref}
-      className="story"
+      className="story h-[230vh] relative mt-[200px] mb-[120px]"
       aria-label="The health content overload"
     >
-      <div className="story-sticky">
-        <motion.div className="photo-column" style={{ x: reduced ? 0 : left }}>
-          <div className="photo-stack">
+      <div className="story-sticky sticky top-[calc(var(--nav-height)+(100svh-var(--nav-height)-min(520px,60svh))/2)] h-[min(520px,60svh)] flex max-w-[1500px] m-auto">
+        <motion.div
+          className="photo-column w-1/2 flex items-center justify-center z-2"
+          style={{ x: reduced ? 0 : left }}
+        >
+          <div className="photo-stack relative h-full w-[min(420px,33vw)]">
             <img
               src={img1}
               alt="Person holding a stack of articles against a blue background"
@@ -93,7 +96,10 @@ export const SectionOne = () => {
             )}
           </div>
         </motion.div>
-        <motion.div className="story-copy" style={{ x: reduced ? 0 : right }}>
+        <motion.div
+          className="story-copy w-1/2 flex items-center justify-center"
+          style={{ x: reduced ? 0 : right }}
+        >
           <div>
             {lines.map((line) => (
               <p key={line}>

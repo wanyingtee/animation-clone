@@ -23,3 +23,16 @@ Compared against the live ORDR home page, its rendered styles, and its published
 ## Scope and remaining differences
 
 The original uses GSAP/Webflow timelines; the clone uses Framer Motion and CSS. Spring smoothing, responsive spacing, and the crest's sticky travel are approximations, not frame-identical reproductions. Mobile content prioritizes keeping the complete article descriptions reachable. Signup is intentionally a static blank line and text, per request. The program CTA links to the original program article rather than implementing an external survey.
+
+## Archive page
+
+- Added `/archive/` with six overlapping editorial covers, alternating −1°/+1° paper rotations, and the reference's 500ms `cubic-bezier(.86, 0, .07, 1)` hover lift/straighten on fine-pointer desktops. Keyboard focus also reveals the active paper.
+- Heading uses a masked 800ms entrance; the newspaper decoration reuses the existing layered scroll, pointer, and idle motion.
+- Responsive layouts at 991px, 767px, and 479px reorganize card text and actions. The stack grows with its copy so small screens and larger text cannot clip the final article link. Covers reserve space before lazy loading.
+- System reduced-motion preference disables decorative animation. The signup dialog supports Escape, native focus containment, labeled email validation, and a local-only completion state. No email is transmitted or stored. Article links lead to the original articles.
+- Asset rename mapping is recorded in `ASSET_NAMES.md`.
+- Navigation uses Vite's base path. The build emits `archive/index.html` and `about/index.html` for direct GitHub Pages navigation.
+
+### Membership popup refinement
+
+“Get started” opens the reference-style olive membership card with a cream inset border, original copy, oval Join Club button, and overlapping close patch. A white scrim and card fade in over 500ms and out over 350ms. Escape/backdrop/close dismiss with focus restoration; background scrolling is locked while open. Phone layouts stack the form controls. Submission stays local and explains that no mailing-list service is connected.

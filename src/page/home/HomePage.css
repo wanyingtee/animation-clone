@@ -16,8 +16,6 @@
 .home-page {
   --home-body: clamp(13px, 0.89vw, 17px);
   --home-heading: clamp(70px, 6.67vw, 128px);
-  width: 100%;
-  overflow: clip;
 }
 .home-page h1,
 .home-page h2,
@@ -35,19 +33,11 @@
   font-size: var(--home-body);
   line-height: 1.15;
 }
-.home-hero {
-  position: relative;
-  text-align: center;
-  padding: clamp(115px, 9vw, 173px) 20px clamp(96px, 7.3vw, 140px);
-}
 .home-eyebrow {
   font:
     clamp(13px, 1.05vw, 20px)/1.2 Heros,
     Arial,
     sans-serif !important;
-  letter-spacing: clamp(7px, 0.73vw, 14px);
-  text-transform: uppercase;
-  padding-left: 0.7em;
 }
 .home-hero h1 {
   font-size: clamp(120px, 12.82vw, 246px);
@@ -58,58 +48,11 @@
   width: max-content;
   max-width: 100%;
 }
-.hero-line-mask {
-  display: block;
-  overflow: hidden;
-  padding-block: 0.05em;
-  margin-block: -0.05em;
-}
 .hero-line-mask > .hero-char-mask {
   display: inline-block;
 }
-.home-intro {
-  margin-top: clamp(28px, 1.7vw, 34px);
-}
-.signup-placeholder {
-  width: clamp(350px, 28vw, 540px);
-  max-width: 100%;
-  margin: clamp(40px, 3.4vw, 65px) auto 0;
-  font-size: var(--home-body);
-  text-align: left;
-}
 .signup-placeholder.with-perks {
   width: clamp(300px, 20vw, 390px);
-}
-.signup-placeholder-row {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  text-transform: uppercase;
-}
-.signup-blank {
-  flex: 1;
-  align-self: stretch;
-  border-bottom: 1px solid;
-  min-height: 30px;
-}
-.signup-label,
-.home-oval {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid currentColor;
-  border-radius: 50%;
-  padding: 0.6em 0.95em;
-  white-space: nowrap;
-  text-transform: uppercase;
-  font-size: var(--home-body);
-  line-height: 1;
-}
-.signup-perks {
-  text-align: center;
-  font-style: italic;
-  margin: 6px auto 0;
-  max-width: 340px;
 }
 .signup-perks span {
   opacity: 0.5;
@@ -121,9 +64,6 @@
   transform: rotate(-5deg);
 }
 .floating-patch {
-  position: absolute;
-  z-index: 4;
-  pointer-events: none;
   width: clamp(100px, 10.8vw, 208px);
 }
 .floating-patch img {
@@ -131,13 +71,9 @@
   height: auto;
 }
 .hero-shoe {
-  left: 19.5%;
-  top: 19%;
   width: clamp(115px, 11.5vw, 220px);
 }
 .hero-varsity {
-  right: 8%;
-  bottom: 6%;
   width: clamp(92px, 8.4vw, 162px);
 }
 @media (min-width: 992px) and (prefers-reduced-motion: no-preference) {
@@ -160,11 +96,6 @@
     transform: translate3d(3px, 7px, 0) rotate(2deg);
   }
 }
-.home-reveal {
-  overflow: hidden;
-  padding-block: 0.08em;
-  margin-block: -0.08em;
-}
 .home-reveal > div {
   will-change: transform, opacity;
 }
@@ -172,43 +103,15 @@
   --photo-height: clamp(440px, 47vw, 900px);
   --grid-height: clamp(450px, 35vw, 675px);
   --crest-clearance: clamp(68px, 6.2vw, 118px);
-  position: relative;
-  margin: 0 1.5%;
-  padding-bottom: clamp(100px, 10.4vw, 200px);
-}
-.home-photo {
-  height: var(--photo-height);
-  overflow: hidden;
 }
 .home-photo > img {
   height: 100%;
   width: 100%;
   object-fit: cover;
 }
-.benefits-grid {
-  height: var(--grid-height);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  position: relative;
-  margin-top: clamp(50px, 4.16vw, 80px);
-}
-.benefit {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  gap: 14px;
-  padding: 35px 25px;
-}
 .benefit h2 {
   font-size: clamp(36px, 3.3vw, 64px);
   letter-spacing: -0.025em;
-}
-.benefit-rule {
-  position: absolute;
-  pointer-events: none;
-  background: #3d433b;
 }
 .benefit-rule.horizontal {
   background: linear-gradient(to right,
@@ -257,81 +160,17 @@
   transform: translateX(-50%);
 }
 .crest-track {
-  position: absolute;
-  top: calc(var(--photo-height) * 0.5);
-  bottom: calc(
-    clamp(100px, 10.4vw, 200px) + var(--grid-height) / 2 -
-      clamp(68px, 6.2vw, 118px)
-  );
-  left: 50%;
   transform: translateX(-50%);
-  width: clamp(136px, 12.4vw, 236px);
-  pointer-events: none;
-}
-.crest-disc {
-  position: relative;
-  top: 0;
-  display: grid;
-  place-items: center;
-  aspect-ratio: 1;
-  background: transparent;
-  padding: clamp(16px, 1.5vw, 28px);
 }
 .crest-disc img {
   width: 100%;
   height: auto;
 }
-.newsletter-preview {
-  position: relative;
-  margin: 0 1.5%;
-  height: clamp(600px, 46.88vw, 900px);
-}
-.newsletter-clip {
-  height: 100%;
-  overflow: hidden;
-  background: #3d433b;
-  color: #e8dec4;
-  text-align: center;
-  padding-top: clamp(80px, 7.3vw, 140px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: clamp(32px, 2.9vw, 56px);
-}
-.newsletter-sheet {
-  width: clamp(330px, 27vw, 520px);
-  max-width: 75%;
-  height: auto;
-  transform-origin: top center;
-}
 .preview-runner {
-  left: 0;
-  top: 4%;
   width: clamp(110px, 11.5vw, 220px);
 }
 .preview-atlas {
-  right: 7%;
-  bottom: -3%;
   width: clamp(90px, 9vw, 173px);
-}
-.home-archive {
-  padding: clamp(110px, 10.4vw, 200px) 4% 0;
-  position: relative;
-  text-align: center;
-}
-.archive-stack {
-  margin: clamp(60px, 6vw, 116px) auto 0;
-  padding-bottom: 40px;
-  position: relative;
-}
-.home-archive-card {
-  position: sticky;
-  padding: clamp(25px, 3vw, 58px) clamp(20px, 1.7vw, 32px)
-    clamp(20px, 2vw, 38px);
-  text-align: left;
-  box-shadow: -4px 14px 27px #39393935;
-  border-top: 1px solid #ffffff80;
-  transform-origin: center top;
 }
 .home-archive-card.sage {
   background: #e2e5df;
@@ -343,13 +182,6 @@
   z-index: 2;
   margin-top: clamp(85px, 10vw, 190px);
 }
-.archive-card-heading {
-  display: grid;
-  grid-template-columns: 1.3fr 1fr 0.7fr;
-  gap: 4%;
-  align-items: start;
-  margin-bottom: clamp(28px, 3vw, 58px);
-}
 .home-page .archive-card-heading h3 {
   font-size: clamp(45px, 4.7vw, 90px);
   text-transform: none;
@@ -360,10 +192,6 @@
 .archive-card-heading .home-oval {
   justify-self: end;
 }
-.archive-image-frame {
-  height: clamp(380px, 34vw, 650px);
-  overflow: hidden;
-}
 .archive-image-frame img {
   width: 100%;
   height: 100%;
@@ -373,25 +201,8 @@
 .home-archive-card:hover .archive-image-frame img {
   transform: scale(1.025);
 }
-.program-reveal {
-  position: relative;
-  z-index: 3;
-  max-width: 610px;
-  width: 31vw;
-  min-width: 350px;
-  margin: -65px auto 0;
-  padding: 20px;
-  overflow: visible;
-}
 .program-card {
-  background: #3d433b;
-  color: #e8dec4;
-  padding: clamp(28px, 2vw, 40px);
-  border: 1px solid #e8dec4;
-  outline: 5px solid #3d433b;
-  box-shadow: 0 8px 16px #0002;
   transform: rotate(-2deg);
-  text-align: center;
 }
 .program-card h3 {
   font-size: clamp(26px, 2.3vw, 44px);
@@ -407,44 +218,13 @@
   margin: 0 auto 24px;
 }
 .handwritten {
-  font-family: Kurt, cursive;
-  display: block;
-  text-transform: uppercase;
-  font-size: 18px;
   transform: rotate(-8deg) translateX(40px);
 }
-.home-join {
-  position: relative;
-  padding: clamp(190px, 17vw, 326px) 20px clamp(180px, 20vw, 384px);
-  text-align: center;
-  scroll-margin-top: var(--nav-height);
-}
-.home-join-copy {
-  margin-top: clamp(28px, 2.2vw, 42px);
-}
 .join-club-patch {
-  right: 12%;
-  top: 15%;
   width: clamp(100px, 10vw, 192px);
 }
 .join-anniversary {
-  left: 10%;
-  bottom: 20%;
   width: clamp(90px, 8vw, 154px);
-}
-.home-footer {
-  margin: 0 1.5% 24px;
-  padding-bottom: 24px;
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  align-items: center;
-  border-bottom: double 8px currentColor;
-  font-size: var(--home-body);
-}
-.home-footer > div {
-  display: flex;
-  gap: 32px;
 }
 @font-face {
   font-family: Kurt;
@@ -511,12 +291,6 @@
   }
   .archive-image-frame {
     height: 450px;
-  }
-  .home-footer {
-    flex-wrap: wrap;
-  }
-  .home-footer > div {
-    gap: 20px;
   }
   .join-club-patch {
     right: 8%;
@@ -732,19 +506,6 @@
     max-width: 350px;
     margin-top: 45px;
   }
-  .home-footer {
-    margin: 0 12px 20px;
-    flex-direction: column;
-    text-align: center;
-    gap: 18px;
-    font-size: 13px;
-  }
-  .home-footer p {
-    font-size: 13px;
-  }
-  .home-footer > div {
-    gap: 24px;
-  }
 }
 @media (max-width: 359px) {
   .hero-varsity {
@@ -925,7 +686,4 @@
 .benefit-rule.vertical img {
   translate: -50% 0;
   transform: none;
-}
-.home-footer a:hover {
-  font-style: normal;
 }

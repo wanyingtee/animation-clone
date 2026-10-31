@@ -1,0 +1,29 @@
+/* Keep the project's existing reset; importing Preflight would change native
+   headings, buttons, borders, and dialogs during this migration. */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+/* Shared dialog fades, exposed as Tailwind animation utilities. */
+@theme {
+  --animate-club-popup-in: club-popup-in 0.5s ease both;
+  --animate-club-popup-out: club-popup-out 0.35s ease both;
+
+  @keyframes club-popup-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes club-popup-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+}
