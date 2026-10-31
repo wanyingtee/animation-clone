@@ -1,7 +1,7 @@
 import { JoinClubControl } from "./JoinClubControl";
 import { OvalControl } from "./OvalControl";
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { currentPage, localHref } from "../routes";
 const base = "https://www.ordrhealth.com";
 const links = [
@@ -13,6 +13,10 @@ const links = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const currentPath = currentPage();
+  const reducedMotion = useReducedMotion();
+  const animateEntrance =
+    (currentPath === "/" || currentPath === "/about") && !reducedMotion;
+  const [entranceComplete, setEntranceComplete] = useState(false);
   const linkTo = (path: string) =>
     ["/", "/about", "/archive"].includes(path) ? localHref(path) : base + path;
   const button = useRef<HTMLButtonElement>(null);
@@ -50,7 +54,18 @@ export default function Navbar() {
     };
   }, [open]);
   return (
-    <header className="fixed inset-[0_0_auto] z-50 bg-[#fff] h-(--nav-height)">
+    <motion.header
+      className="fixed inset-[0_0_auto] z-50 bg-[#fff] h-(--nav-height)"
+      initial={animateEntrance ? { y: "-100%" } : false}
+      animate={{ y: 0 }}
+      transition={{
+        delay: animateEntrance ? 0.8 : 0,
+        duration: animateEntrance ? 0.7 : 0,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+      inert={animateEntrance && !entranceComplete}
+      onAnimationComplete={() => setEntranceComplete(true)}
+    >
       <div className="nav-bar w-[97%] h-full m-auto flex items-center justify-between [border-bottom:3px_double_#3d433b] pb-[8px] relative">
         <a
           className="brand uppercase text-[17px] w-[144px]"
@@ -121,6 +136,6 @@ export default function Navbar() {
           </motion.nav>
         )}
       </AnimatePresence>
-    </header>
+    </motion.header>
   );
 }
