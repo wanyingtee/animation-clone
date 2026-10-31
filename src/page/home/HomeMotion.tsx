@@ -39,16 +39,25 @@ export function ScrollReveal({
     [0, 1],
   );
   return (
-    <div ref={ref} className={`home-reveal ${className}`}>
+    <div
+      ref={ref}
+      className={`home-reveal overflow-hidden py-[0.08em] my-[-0.08em] ${className}`}
+    >
       <motion.div
         initial={false}
-        style={revealed === undefined
-          ? { y: reduced ? 0 : y, opacity: reduced ? 1 : opacity }
-          : undefined}
-        animate={revealed === undefined ? undefined : {
-          y: reduced || revealed ? "0%" : "110%",
-          opacity: reduced || revealed ? 1 : 0,
-        }}
+        style={
+          revealed === undefined
+            ? { y: reduced ? 0 : y, opacity: reduced ? 1 : opacity }
+            : undefined
+        }
+        animate={
+          revealed === undefined
+            ? undefined
+            : {
+                y: reduced || revealed ? "0%" : "110%",
+                opacity: reduced || revealed ? 1 : 0,
+              }
+        }
         transition={{
           duration: reduced ? 0 : duration,
           delay: reduced || !revealed ? 0 : delay,
@@ -87,14 +96,19 @@ export function FloatingPatch({
     target: ref,
     offset: ["start end", "end start"],
   });
-  const patchIndex = [
+  const patchNames = [
     "hero-shoe",
     "hero-varsity",
     "preview-runner",
     "preview-atlas",
     "join-anniversary",
     "join-club-patch",
-  ].indexOf(className);
+  ];
+  // Utility classes can be added or reordered without changing the motion preset.
+  const patchIndex = patchNames.findIndex((name) =>
+    className.split(/\s+/).includes(name),
+  );
+  const patchName = patchNames[patchIndex] ?? "";
   const speed = 0.08 + (Math.max(patchIndex, 0) % 5) * 0.025;
   const mouseDistance = 8 + (Math.max(patchIndex, 0) % 4) * 4;
   const y = useTransform(
@@ -132,22 +146,26 @@ export function FloatingPatch({
     };
   }, [reduced, mouseX, mouseY, mouseRotation, mouseDistance, patchIndex]);
   return (
-    <div ref={ref} className={`floating-patch ${className}`} aria-hidden="true">
+    <div
+      ref={ref}
+      className={`floating-patch absolute z-4 pointer-events-none ${className}`}
+      aria-hidden="true"
+    >
       <motion.div style={{ y: reduced ? 0 : y }}>
         <motion.div
           initial={
-            reduced || !className.startsWith("hero-")
+            reduced || !patchName.startsWith("hero-")
               ? false
               : {
-                  x: className === "hero-shoe" ? "-30%" : "30%",
-                  y: className === "hero-shoe" ? "-30%" : "30%",
+                  x: patchName === "hero-shoe" ? "-30%" : "30%",
+                  y: patchName === "hero-shoe" ? "-30%" : "30%",
                   opacity: 0,
                 }
           }
           animate={{ x: 0, y: 0, opacity: 1 }}
           transition={{
             duration: 0.7,
-            delay: className === "hero-shoe" ? 1 : 1.1,
+            delay: patchName === "hero-shoe" ? 1 : 1.1,
             ease: "easeOut",
           }}
         >

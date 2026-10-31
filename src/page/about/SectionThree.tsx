@@ -28,9 +28,9 @@ function RevealLine({
   });
 
   return (
-    <span className={`mission-line-mask${className ? ` ${className}` : ""}`}>
+    <span className={`mission-line-mask block overflow-hidden py-[0.06em] my-[-0.06em] ${className ? ` ${className}` : ""}`}>
       <motion.span
-        className="mission-line-text"
+        className="block [will-change:transform,_opacity]"
         style={{
           opacity: reduced ? 1 : opacity,
           y: reduced ? 0 : y,
@@ -55,7 +55,7 @@ export const SectionThree = ({
   const scale = useTransform(progress, IMAGE_RANGE, [1.35, 1]);
   return (
     <motion.div
-      className="mission"
+      className="mission absolute [inset:0] grid place-items-center text-[#fff] [will-change:clip-path]"
       style={{ clipPath: reduced ? "none" : clipPath }}
     >
       <motion.img
@@ -63,7 +63,7 @@ export const SectionThree = ({
         alt="Two people walking in sportswear, carrying a gym bag"
         style={{ scale: reduced ? 1 : scale }}
       />
-      <div className="mission-copy">
+      <div className="relative text-center">
         <h2>
           <RevealLine progress={progress} range={[0.62, 0.72]}>
             So we made it

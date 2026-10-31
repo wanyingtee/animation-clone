@@ -39,3 +39,16 @@ Shared fonts, the paper overlay, and the ORDR wordmark live in `public/assets` w
 ## Accessibility
 
 Reduced-motion preferences disable decorative movement and reveal all text. Mobile navigation supports Escape and focus wrapping. A skip link provides keyboard access to the main content. On smaller screens the archive cards use normal document flow so article content remains reachable.
+
+## Styling
+
+`src/main.tsx` imports `src/tailwind.css`, which loads Tailwind's theme and
+utilities through the existing Vite plugin. The project's reset stays in the
+`base` layer in `src/index.css`; Preflight is deliberately omitted to preserve
+native controls and the existing typography.
+
+Use utility classes for layout, spacing, sizing, and other static styles.
+Remaining semantic classes are hooks for the page stylesheets' responsive,
+contextual, and animation rules. Those rules remain unlayered so their existing
+breakpoint and interaction overrides take precedence over base utilities.
+Framer Motion continues to own scroll-driven inline transforms.

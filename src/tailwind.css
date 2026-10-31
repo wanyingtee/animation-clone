@@ -1,0 +1,5 @@
+/* Keep the project's existing reset; importing Preflight would change native
+   headings, buttons, borders, and dialogs during this migration. */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);

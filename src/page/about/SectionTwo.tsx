@@ -30,7 +30,7 @@ function MovingLine({
   );
   return (
     <motion.div
-      className={`statement-line line-${index}`}
+      className={`statement-line text-right will-change-[transform,opacity] line-${index}`}
       style={{ y: reduced ? 0 : y, opacity: reduced ? 1 : opacity }}
     >
       {children}
@@ -45,15 +45,18 @@ export const SectionTwo = () => {
   });
   const progress = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
   return (
-    <section ref={ref} className="manifesto">
-      <div className="manifesto-sticky">
-        <div className="manifesto-content">
+    <section
+      ref={ref}
+      className="manifesto h-[320vh] bg-[#3d433b] text-[#e8dec4] relative"
+    >
+      <div className="manifesto-sticky sticky top-(--nav-height) h-[calc(100svh-var(--nav-height))] overflow-hidden">
+        <div className="manifesto-content h-full p-[clamp(26px,4vh,64px)_2.5vw]">
           <h2>
             You start <em>curious</em>
             <br />
             but end <em>overwhelmed</em>
           </h2>
-          <div className="statement">
+          <div className="statement uppercase tracking-[-2px] mt-[clamp(30px,6vh,80px)]">
             <MovingLine progress={progress} index={0}>
               Finding the
             </MovingLine>

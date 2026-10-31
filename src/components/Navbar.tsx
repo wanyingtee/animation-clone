@@ -48,12 +48,18 @@ export default function Navbar() {
     };
   }, [open]);
   return (
-    <header className="header">
-      <div className="nav-bar">
-        <a className="brand" href={localHref("/")}>
+    <header className="fixed inset-[0_0_auto] z-50 bg-[#fff] h-(--nav-height)">
+      <div className="nav-bar w-[97%] h-full m-auto flex items-center justify-between [border-bottom:3px_double_#3d433b] pb-[8px] relative">
+        <a
+          className="brand uppercase text-[17px] w-[144px]"
+          href={localHref("/")}
+        >
           Ordr
         </a>
-        <nav className="desktop-nav" aria-label="Main navigation">
+        <nav
+          className="desktop-nav flex gap-[40px] text-[17px]"
+          aria-label="Main navigation"
+        >
           {links.map(([label, path]) => (
             <a
               key={label}
@@ -64,12 +70,15 @@ export default function Navbar() {
             </a>
           ))}
         </nav>
-        <a className="join-link oval" href={localHref("/#join-club")}>
+        <a
+          className="join-link oval uppercase text-[17px] items-center justify-center [border:1px_solid_#3d433b] rounded-[50%] w-[144px] h-[44px] [background:none]"
+          href={localHref("/#join-club")}
+        >
           Join club
         </a>
         <button
           ref={button}
-          className="menu-toggle oval"
+          className="menu-toggle oval uppercase text-[17px] items-center justify-center [border:1px_solid_#3d433b] rounded-[50%] w-[144px] h-[44px] [background:none]"
           aria-expanded={open}
           aria-controls="mobile-nav"
           onClick={() => setOpen(!open)}
@@ -82,7 +91,7 @@ export default function Navbar() {
           <motion.nav
             ref={menu}
             id="mobile-nav"
-            className="mobile-nav"
+            className="mobile-nav fixed inset-[var(--nav-height)_0_0] bg-[#fff] flex flex-col justify-center p-[30px] gap-[20px]"
             aria-label="Mobile navigation"
             initial={{ clipPath: "inset(0 0 100% 0)" }}
             animate={{ clipPath: "inset(0 0 0% 0)" }}
